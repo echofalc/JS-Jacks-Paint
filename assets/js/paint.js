@@ -1,98 +1,151 @@
-function configureListeners() {
-    var images = document.getElementsByTagName('img');    
+// Function to add paint name, price, and reduce opacity
 
-     for (var i = 0; i < images.length; i++) {        
-        document.getElementById(images[i].id).addEventListener('mouseover', addOpacity, false)        
-        document.getElementById(images[i].id).addEventListener('mouseout', removeOpacity, false)        
-    } 
-}
-
-function addOpacity(event) {
-    if (!this.classList.contains('dim')){
-        this.classList.add('dim')
-    }    
-    getProductInfo(event.target.id);     
-}
-
-function removeOpacity(event) {
-     if (this.classList.contains('dim')){
-        this.classList.remove('dim');
+let colorsArray = [
+    {
+        color: "Lime Green",
+        id: "pn1",
+        price: 14.99
+    },
+    {
+        color: "Medium Brown",
+        id: "pn2",
+        price: 11.14
+    },
+    {
+        color: "Royal Blue",
+        id: "pn3",
+        price: 22.99
+    },
+    {
+        color: "Solid Red",
+        id: "pn4",
+        price: 13.42
+    },
+    {
+        color: "Solid White",
+        id: "pn5",
+        price: 21.98
+    },
+    {
+        color: "Solid Black",
+        id: "pn6",
+        price: 4.99
+    },
+    {
+        color: "Solid Cyan",
+        id: "pn7",
+        price: 8.22
+    },
+    {
+        color: "Solid Purple",
+        id: "pn8",
+        price: 11.99
+    },
+    {
+        color: "Solid Yellow",
+        id: "pn9",
+        price: 14.99
     }
+]
 
-    let element = document.getElementById('ppg');
-        element.textContent = '';
-        
-    let color = document.getElementById('color');
-        color.textContent = ''; 
-
-    event.preventDefault();    
+function setInfo (color, price) {
+    if (color != null) {
+    document.getElementById("color").textContent = color
+    document.getElementById("ppg").textContent = '$' + price;
+    } else {
+        document.getElementById("color").textContent = null
+        document.getElementById("ppg").textContent = "Hover over a color!" 
+    }
 }
 
-function changeImage(elementId) {
-    let image = document.getElementById('imgDisplay');
-    image.src = elementId.src;
-}
+// Print info + dim/undim images
 
-function getProductInfo(partNumber) {
-    let price;
-    let colorName;  
+function printInfo(id) {
     
-    switch (partNumber) {
-        case 'pn1':           
-            price = '$19.99'
-            colorName = 'Lime Green'
-            updatePrice(colorName, price)           
-            break;           
-        case 'pn2':
-            price = '$12.99'
-            colorName = 'Medium Brown' 
-            updatePrice(colorName, price)     
-            break;            
-        case 'pn3':
-            price = '$11.99'
-            colorName = 'Royal Blue'   
-            updatePrice(colorName, price)   
-            break;   
-        case 'pn4':
-            price = '$14.99'
-            colorName = 'Bright Red'            
-            updatePrice(colorName, price)   
-            break;   
-        case 'pn5':
-            price = '$9.99'
-            colorName = 'Solid White' 
-            updatePrice(colorName, price)              
-            break;   
-        case 'pn6':
-            price = '$15.99'
-            colorName = 'Solid Black'   
-            updatePrice(colorName, price)            
-            break;   
-        case 'pn7':
-            price = '$8.99'
-            colorName = 'Medium Blue'       
-            updatePrice(colorName, price)        
-            break;   
-        case 'pn8':
-            price = '$16.99'
-            colorName = 'Light Purple'      
-            updatePrice(colorName, price)         
-            break;   
-        case 'pn9':
-            price = '$17.99'
-            colorName = 'Bright Yellow'                       
-            updatePrice(colorName, price)   
-            break;   
-          default:              
-    }
+    document.getElementById(id).addEventListener("mouseover", function () {
+        let imageDim = document.getElementById(this.id)
+        imageDim.style.filter = "brightness(50%)"
+        let imageColor = colorsArray.find( colorsArray => colorsArray.id === id)
+        let printColor = imageColor.color
+        let printPrice = imageColor.price
+        setInfo(printColor, printPrice)
+    })
 
-    function updatePrice(colorName, price)
-    {       
-        let ppg = document.getElementById('ppg');
-        ppg.textContent = price;
-        
-        let color = document.getElementById('color');
-        color.textContent = colorName;
-    }
-    
+    document.getElementById(id).addEventListener("mouseout", function () {
+        let imageBright = document.getElementById(this.id)
+        imageBright.style.filter = "brightness(100%)"
+        let printColor;
+        let printPrice;
+        setInfo(printColor, printPrice)
+    })
 }
+
+printInfo("pn1")
+printInfo("pn2")
+printInfo("pn3")
+printInfo("pn4")
+printInfo("pn5")
+printInfo("pn6")
+printInfo("pn7")
+printInfo("pn8")
+printInfo("pn9")
+
+
+// for (let i = 0; i < colorsArray.length; i++) {
+//     let selectedColor = colorsArray[i].color
+//     switch (selectedColor) {
+//     case selectedColor === "Lime Green":
+//         let color = "Lime Green"
+//         let price = 14.99
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Medium Brown":
+//         let color = "Medium Brown"
+//         let price = 11.14
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Royal Blue":
+//         let color = "Royal Blue"
+//         let price = 22.99
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Solid Black":
+//         let color = "Solid Black"
+//         let price = 4.99
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Solid Cyan":
+//         let color = "Solid Cyan"
+//         let price = 8.22
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Solid Purple":
+//         let color = "Solid Purple"
+//         let price = 11.99
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Solid Red":
+//         let color = "Solid Red"
+//         let price = 13.42
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Solid White":
+//         let color = "Solid White"
+//         let price = 21.98
+//         setColor (color, price)
+//     break;
+
+//     case selectedColor === "Solid Yellow":
+//         let color = "Solid Yellow"
+//         let price = 14.99
+//         setColor (color, price)
+//     break;
+// }
+// }
